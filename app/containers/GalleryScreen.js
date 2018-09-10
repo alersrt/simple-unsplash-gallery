@@ -3,10 +3,16 @@ import React, { Component } from 'react'
 
 import { fetchPhotos } from '../actions/fetchPhotos'
 import { styles } from '../styles/styles'
-import { Button, Text, ScrollView, View } from 'react-native'
+import { ScrollView, Text } from 'react-native'
+import { withNavigation } from 'react-navigation'
+import LoadingIndicator from '../components/LoadingIndicator'
 
-export default class GalleryScreen extends Component {
-  constructor(props) {
+class GalleryScreen extends Component {
+  static navigationOptions = {
+    title: 'Gallery',
+  }
+
+  constructor (props) {
     super(props)
     this.state = {
       photos: [],
@@ -15,20 +21,21 @@ export default class GalleryScreen extends Component {
     }
   }
 
-  render() {
+  render () {
     if (this.state.hasErrored) {
-      return <View><Text>Sorry! There was an error loading the items</Text></View>
+      return <Text style={styles.error}>Sorry! There was an error loading the items</Text>
     }
 
     if (this.state.isLoading) {
-      return <View><Text>Loading...</Text></View>
+      return <LoadingIndicator/>
     }
 
     return (
-      <ScrollView style={styles.gallery}>
+      <ScrollView contentContainerStyle={styles.gallery}>
         {this.state.photos.map(photo => <GalleryPhoto
           key={photo.id}
-          image={photo.urls.thumb}
+          thumbImage={photo.urls.thumb}
+          rawImage={photo.urls.raw}
           title={photo.description}
           author={photo.user.name}
         />)}
@@ -36,18 +43,20 @@ export default class GalleryScreen extends Component {
     )
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.getPhotos()
   }
 
-  getPhotos() {
-    this.setState({ isLoading: true })
+  getPhotos () {
+    this.setState({isLoading: true})
 
     fetchPhotos().then(photos => {
       this.setState({
         isLoading: false,
         photos: photos,
       })
-    }).catch(() => this.setState({ hasErrored: true }))
+    }).catch(() => this.setState({hasErrored: true}))
   }
 }
+
+export default withNavigation(GalleryScreen)

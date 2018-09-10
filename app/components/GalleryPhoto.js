@@ -1,19 +1,27 @@
 import React, { Component } from 'react'
 
-import { View, Text, Image } from 'react-native'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
+import { withNavigation } from 'react-navigation'
 import { styles } from '../styles/styles'
 
-export default class GalleryPhoto extends Component {
-  render() {
+class GalleryPhoto extends Component {
+  onPressImage = () => this.props.navigation.navigate('Photo', {rawImage: this.props.rawImage})
+
+  render () {
     return (
       <View>
-        <Text>Title: {this.props.title}</Text>
-        <Text>Author: {this.props.author}</Text>
-        <Image
-          source={{ uri: this.props.image }}
-          style={styles.image}
-        />
+        <Text style={styles.title}>{this.props.title}</Text>
+        <Text style={styles.author}>{this.props.author}</Text>
+        <TouchableOpacity onPress={() => this.onPressImage()}>
+          <Image
+            source={{uri: this.props.thumbImage}}
+            style={styles.thumb}
+            resizeMode='contain'
+          />
+        </TouchableOpacity>
       </View>
     )
   }
 }
+
+export default withNavigation(GalleryPhoto)
