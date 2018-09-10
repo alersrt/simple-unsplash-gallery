@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 
-import { Image, Text, View } from 'react-native'
+import { View, Text, Image } from 'react-native'
+import { styles } from '../styles/styles'
 
 export default class GalleryPhoto extends Component {
-  render () {
+  render() {
     return (
       <View>
-        <Text>{this.props.title}</Text>
-        <Image source={{uri: this.props.uri}}></Image>
-        <Text>{this.props.author}</Text>
+        <Text>Title: {this.props.title}</Text>
+        <Text>Author: {this.props.author}</Text>
+        <Image
+          source={{ uri: this.props.image }}
+          style={styles.image}
+        />
       </View>
     )
   }

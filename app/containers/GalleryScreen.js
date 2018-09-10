@@ -3,10 +3,10 @@ import React, { Component } from 'react'
 
 import { fetchPhotos } from '../actions/fetchPhotos'
 import { styles } from '../styles/styles'
-import { Button, Text, View } from 'react-native'
+import { Button, Text, ScrollView, View } from 'react-native'
 
 export default class GalleryScreen extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       photos: [],
@@ -15,7 +15,7 @@ export default class GalleryScreen extends Component {
     }
   }
 
-  render () {
+  render() {
     if (this.state.hasErrored) {
       return <View><Text>Sorry! There was an error loading the items</Text></View>
     }
@@ -25,25 +25,29 @@ export default class GalleryScreen extends Component {
     }
 
     return (
-      <View style={styles.gallery}>
-        {this.state.photos.map(
-          photo => <GalleryPhoto uri={photo.urls.small} title={photo.description} author={photo.user.name}/>)}
-      </View>
+      <ScrollView style={styles.gallery}>
+        {this.state.photos.map(photo => <GalleryPhoto
+          key={photo.id}
+          image={photo.urls.thumb}
+          title={photo.description}
+          author={photo.user.name}
+        />)}
+      </ScrollView>
     )
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.getPhotos()
   }
 
-  getPhotos () {
-    this.setState({isLoading: true})
+  getPhotos() {
+    this.setState({ isLoading: true })
 
     fetchPhotos().then(photos => {
       this.setState({
         isLoading: false,
         photos: photos,
       })
-    }).catch(() => this.setState({hasErrored: true}))
+    }).catch(() => this.setState({ hasErrored: true }))
   }
 }
