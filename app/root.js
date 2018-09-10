@@ -1,6 +1,6 @@
 import { createStackNavigator } from 'react-navigation'
-import GalleryScreen from './GalleryScreen'
-import PhotoScreen from './PhotoScreen'
+import GalleryScreen from 'app/containers/GalleryScreen'
+import PhotoScreen from 'app/containers/PhotoScreen'
 
 const Root = createStackNavigator(
   {
