@@ -12,7 +12,7 @@ export let styles = StyleSheet.create({
   },
   thumb: {
     height: 200,
-    width: 200,
+    width: 400,
     alignSelf: 'center',
   },
   loadingBox: {
@@ -22,8 +22,8 @@ export let styles = StyleSheet.create({
     alignItems: 'center'
   },
   loadingImage: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
   },
   rawBox: {
     flex: 1,

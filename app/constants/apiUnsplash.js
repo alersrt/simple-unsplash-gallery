@@ -11,9 +11,14 @@ let BASE_URL = 'https://api.unsplash.com/'
  * @param orderBy order of photos, can to get the next values: latest, oldest, popular.
  * @returns {string}
  */
-export let getPhotosUri = function (page, perPage, orderBy) {
+
+let getPhotosUri1 = function (page, perPage, orderBy) {
   return BASE_URL + 'photos?page=' + page + '&per_page=' + perPage + '&order_by=' + orderBy
 }
+let getPhotosUri2 = (page, perPage) => getPhotosUri1(page, perPage, 'latest')
+let getPhotosUri = page => getPhotosUri2(page, 10, 'latest')
+
+export { getPhotosUri }
 
 /**
  * Return default URI for getting of photos.
